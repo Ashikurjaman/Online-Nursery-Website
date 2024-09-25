@@ -1,9 +1,35 @@
+import { FormEvent, useState } from "react";
+import { useAddProductsMutation } from "../../Redux/Api/Api";
+
 const ProductUpdate = () => {
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
+  const [price, setprice] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [imgUrl, setImg] = useState("");
+  const [rating, setRating] = useState("");
+  const [addProduct, { isLoading, isSuccess, isError }] =
+    useAddProductsMutation();
+  const handelSubmit = (e: FormEvent) => {
+    // e.preventDefault();
+    const form = e.target;
+    const data = {
+      title,
+      category,
+      price,
+      quantity,
+      imgUrl,
+      rating,
+    };
+    addProduct(data);
+
+    form.reset();
+  };
   return (
     <div>
       <div>
         <button
-          className="btn"
+          className="btn  text-slate-300 bg-[#384B70]"
           onClick={() => document.getElementById("my_modal_1").showModal()}
         >
           Add Product
@@ -15,57 +41,89 @@ const ProductUpdate = () => {
               Press ESC key or click the button below to close
             </p>
             <div className="modal-action">
-              <form method="dialog" className="mx-auto space-y-3">
+              <form
+                onSubmit={handelSubmit}
+                method="dialog"
+                className="mx-auto space-y-3"
+              >
                 {/* if there is a button in form, it will close the modal */}
                 <div className="flex flex-col flex-1">
-                  <label htmlFor="">Title</label>
+                  <label className="mb-3" htmlFor="">
+                    Title
+                  </label>
                   <input
                     type="text"
+                    onChange={(e) => setTitle(e.target.value)}
                     placeholder="Type here"
-                    className="input input-bordered w-full max-w-xs"
+                    className="input input-bordered input-sm w-full max-w-lg"
                   />
                 </div>
                 <div className="flex flex-col flex-1">
-                  <label htmlFor="">Category Name</label>
+                  <label className="mb-3" htmlFor="">
+                    Category Name
+                  </label>
+                  <select
+                    className="select select-bordered w-full max-w-xs"
+                    onChange={(e) => setCategory(e.target.value)}
+                  >
+                    <option disabled selected></option>
+                    <option>Han Solo</option>
+                    <option>Greedo</option>
+                  </select>
+                </div>
+                <div className="flex flex-col flex-1">
+                  <label className="mb-3" htmlFor="">
+                    Price
+                  </label>
                   <input
                     type="text"
+                    onChange={(e) => setprice(e.target.value)}
                     placeholder="Type here"
-                    className="input input-bordered w-full max-w-xs"
+                    className="input input-bordered input-sm w-full max-w-lg"
                   />
                 </div>
                 <div className="flex flex-col flex-1">
-                  <label htmlFor="">Price</label>
+                  <label className="mb-3" htmlFor="">
+                    Quantity
+                  </label>
                   <input
                     type="text"
+                    onChange={(e) => setQuantity(e.target.value)}
                     placeholder="Type here"
-                    className="input input-bordered w-full max-w-xs"
+                    className="input input-bordered input-sm w-full max-w-lg"
                   />
                 </div>
                 <div className="flex flex-col flex-1">
-                  <label htmlFor="">Quantity</label>
+                  <label className="mb-3" htmlFor="">
+                    Image url
+                  </label>
                   <input
                     type="text"
+                    onChange={(e) => setImg(e.target.value)}
                     placeholder="Type here"
-                    className="input input-bordered w-full max-w-xs"
+                    className="input input-bordered input-sm w-full max-w-lg"
                   />
                 </div>
                 <div className="flex flex-col flex-1">
-                  <label htmlFor="">Image url</label>
+                  <label className="mb-3" htmlFor="">
+                    Rating
+                  </label>
                   <input
                     type="text"
+                    onChange={(e) => setRating(e.target.value)}
                     placeholder="Type here"
-                    className="input input-bordered w-full max-w-xs"
+                    className="input input-bordered input-sm w-full max-w-lg"
                   />
                 </div>
-                <div className="flex flex-col flex-1">
-                  <label htmlFor="">Rating</label>
-                  <input
-                    type="text"
-                    placeholder="Type here"
-                    className="input input-bordered w-full max-w-xs"
-                  />
-                </div>
-                <button className="btn">Close</button>
+                <button className="btn text-slate-300 bg-[#384B70]">
+                  Close
+                </button>
+                <button
+                  className="btn text-slate-300 bg-[#384B70]"
+                  type="submit"
+                >
+                  Save
+                </button>
               </form>
             </div>
           </div>
@@ -93,10 +151,14 @@ const ProductUpdate = () => {
                 <td></td>
                 <td className="flex gap-3">
                   <tr>
-                    <button>Edit</button>
+                    <button className="btn text-slate-300 bg-[#384B70]">
+                      Edit
+                    </button>
                   </tr>
                   <tr>
-                    <button>Delete</button>
+                    <button className="btn text-slate-300 bg-[#384B70]">
+                      Delete
+                    </button>
                   </tr>
                 </td>
               </tr>
