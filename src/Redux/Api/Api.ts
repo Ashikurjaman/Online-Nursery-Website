@@ -12,6 +12,12 @@ export const baseApi = createApi({
         method: "GET",
       }),
     }),
+    getCategory: builder.query({
+      query: () => ({
+        url: "/category",
+        method: "GET",
+      }),
+    }),
     addProducts: builder.mutation({
       query: (data) => ({
         url: "/product",
@@ -35,4 +41,5 @@ export const {
   useGetProductsQuery,
   useAddProductsMutation,
   useAddCategoryMutation,
+  useGetCategoryQuery,
 } = baseApi;
